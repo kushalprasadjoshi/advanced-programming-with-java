@@ -1,4 +1,4 @@
-# Unit 2 - Object Oriented Principles in Java
+# Chapter 2 - Object Oriented Principles in Java
 
 ## Overview of Object-Oriented Programming (OOP)
 

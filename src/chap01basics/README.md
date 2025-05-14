@@ -1,4 +1,4 @@
-# Unit 1 - Basic Programming With Java
+# Chapter 1 - Basic Programming With Java
 
 Java is object-oriented, platform independent, multithreaded programming language developed by Sun Micro System (later owned by Oracle)
 
