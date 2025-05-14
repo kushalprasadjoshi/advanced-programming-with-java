@@ -151,8 +151,8 @@ Operators are symbols used to perform operations on variables and values. They a
 | Arithmetic   | `+`, `-`, `/`, `*`, `%` | Perform basic mathematical operations.          |
 | Conditional  | `==`, `<`, `>`, `<=`, `>=`, `!=` | Compare values and return a boolean result. |
 | Assignment   | `=`, `+=`, `-=`, `*=`, `/=`, `%=` | Assign values to variables.                   |
-| Logical      | `&&`, `||`, `!`     | Perform logical operations.                     |
-| Bitwise      | `&`, `|`, `^`, `~`, `<<`, `>>`, `>>>` | Perform bit-level operations.              |
+| Logical      | `&&`, `\|\|`, `!`     | Perform logical operations.                     |
+| Bitwise      | `&`, `\|`, `^`, `~`, `<<`, `>>`, `>>>` | Perform bit-level operations.              |
 
 ### Unary Operators
 
@@ -301,3 +301,180 @@ double add(double a, double b) {
 
 ---
 
+## Array
+
+An array is a data structure that allows you to store multiple values of the same type in a single variable. It is useful when you need to manage a collection of data efficiently.
+
+**Key Features:**
+- Arrays are fixed in size, meaning the number of elements is determined when the array is created.
+- All elements in an array must be of the same data type.
+- Array elements are stored in contiguous memory locations, allowing fast access using indices.
+
+**Advantages:**
+- Simplifies the management of multiple data items.
+- Provides fast access to elements using their index.
+
+**Syntax:**
+```java
+<type>[] <arrayName> = new <type>[<size>];
+```
+
+**Example:**
+```java
+// Declaring an array
+int[] number = new int[5];
+
+// Declaring and initializing an array
+int[] numbers = {10, 20, 30, 40, 50};
+// int numbers[] = {10, 20, 30, 40, 50} // Also valid but not preferred
+
+// Accessing array elements
+System.out.println(numbers[0]); // Output: 10
+
+// Modifying an array element
+numbers[1] = 25;
+System.out.println(numbers[1]); // Output: 25
+```
+
+**Note:**
+- Array indices start from `0`.
+- Attempting to access an index outside the array bounds will result in an `ArrayIndexOutOfBoundsException`.
+
+### Iterating Over an Array:
+
+You can use loops to iterate through the elements of an array.
+
+#### Enhanced `for` Loop
+
+The enhanced `for` loop (also known as the "for-each" loop) is a simplified way to iterate over arrays or collections.
+
+**Syntax:**
+```java
+for (<type> <variable> : <array>) {
+    // Code to execute
+}
+```
+
+### Example:
+```java
+int[] numbers = {1, 2, 3, 4, 5};
+
+// Using a traditional for loop
+for (int i = 0; i < numbers.length; i++) {
+    System.out.println(numbers[i]);
+}
+
+// Using an enhanced for loop
+for (int number : numbers) {
+    System.out.println(number);
+}
+```
+
+**Output:**
+```
+1
+2
+3
+4
+5
+```
+
+### Program
+
+```java
+package chap01basics;
+
+public class ArrayExample {
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30, 40, 50};
+        for (int number : numbers) {
+            System.out.println(number);
+        }
+    }
+}
+```
+
+**Output:**
+```output
+10
+20
+30
+40
+50
+```
+
+---
+
+## Input in Java
+
+In Java, input can be taken from the user using the `Scanner` class, which is part of the `java.util` package. The `Scanner` class provides methods to read different types of input such as integers, floating-point numbers, strings, etc.
+
+#### Importing the Scanner Class
+To use the `Scanner` class, you need to import it at the beginning of your program:
+```java
+import java.util.Scanner;
+```
+
+#### Syntax
+```java
+Scanner scanner = new Scanner(System.in);
+<type> variable = scanner.next<Type>();
+```
+
+#### Common Methods of the Scanner Class
+| Method               | Description                                   |
+|----------------------|-----------------------------------------------|
+| `nextInt()`          | Reads an integer value.                      |
+| `nextDouble()`       | Reads a double value.                        |
+| `nextFloat()`        | Reads a float value.                         |
+| `nextLine()`         | Reads a string (including spaces).           |
+| `next()`             | Reads a single word (up to a space).         |
+| `nextBoolean()`      | Reads a boolean value (`true` or `false`).   |
+
+#### Example Program
+```java
+package chap01basics;
+
+import java.util.Scanner;
+
+public class InputDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Reading an integer
+        System.out.print("Enter an integer: ");
+        int number = scanner.nextInt();
+        System.out.println("You entered: " + number);
+
+        // Reading a double
+        System.out.print("Enter a double: ");
+        double decimal = scanner.nextDouble();
+        System.out.println("You entered: " + decimal);
+
+        // Reading a string
+        scanner.nextLine(); // Consume the leftover newline
+        System.out.print("Enter a string: ");
+        String text = scanner.nextLine();
+        System.out.println("You entered: " + text);
+
+        scanner.close();
+    }
+}
+```
+
+#### Output
+```output
+Enter an integer: 42
+You entered: 42
+Enter a double: 3.14
+You entered: 3.14
+Enter a string: Hello, Java!
+You entered: Hello, Java!
+```
+
+**Note:**
+- Always close the `Scanner` object using `scanner.close()` to release resources.
+- Use `scanner.nextLine()` to handle strings properly after reading other types of input, as it consumes the newline character left in the buffer.
+- Be cautious of input mismatches (e.g., entering a string when an integer is expected), as they can throw exceptions like `InputMismatchException`.
+
+---
