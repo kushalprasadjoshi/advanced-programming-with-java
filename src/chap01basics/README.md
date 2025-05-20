@@ -478,3 +478,337 @@ You entered: Hello, Java!
 - Be cautious of input mismatches (e.g., entering a string when an integer is expected), as they can throw exceptions like `InputMismatchException`.
 
 ---
+
+## Packages
+
+Packages in Java are used to group related classes, interfaces, and sub-packages together. They help organize code, avoid naming conflicts, and provide access control.
+
+### Key Points:
+- **Definition:** A package is a namespace that organizes a set of related classes and interfaces.
+- **Types:** 
+    - **Built-in packages:** Provided by Java (e.g., `java.util`, `java.io`).
+    - **User-defined packages:** Created by developers for their own classes.
+
+### Creating a Package
+To declare a class as part of a package, use the `package` keyword at the top of the Java file:
+- Create a folder. Example: `mypackage`
+- Create a class inside folder. Example: `Hello`
+- First statement of class should be package declaration. Example: `package mypackage;`
+
+
+```java
+package mypackage;
+
+public class MyClass {
+        // class code
+}
+```
+
+### Using Packages
+To use classes from a package, use the `import` statement:
+- `import <packagename>.*`
+- `import <packagename>.ClassName`
+
+```java
+import mypackage.MyClass;
+
+public class Test {
+        public static void main(String[] args) {
+                MyClass obj = new MyClass();
+        }
+}
+```
+
+### Advantages of Packages
+- **Modularity:** Organizes code into logical units.
+- **Reusability:** Classes in packages can be reused across projects.
+- **Name Collision Avoidance:** Prevents naming conflicts between classes.
+- **Access Protection:** Provides access control using access modifiers.
+
+### Example
+```java
+// File: mypackage/Hello.java
+package chap01basics;
+
+package chap01basics.mypackage;
+
+public class Hello {
+    public void greet() {
+        System.out.println("Hello from package!");
+    }
+}
+```
+
+```java
+// File: Test.java
+package chap01basics;
+
+import chap01basics.mypackage.Hello;
+
+public class Test {
+    public static void main(String[] args) {
+        Hello h = new Hello();
+        h.greet();
+    }
+}
+```
+
+**Output:**
+```output
+Hello from package!
+```
+
+### Sub-Packages
+
+A sub-package is a package that is nested inside another package. Sub-packages help further organize classes into a hierarchical structure, making large projects easier to manage.
+
+**Key Points:**
+- Sub-packages are created by adding a dot (`.`) and the sub-package name to the parent package (e.g., `chap01basics.mypackage`).
+- The directory structure should match the package hierarchy. For example, `chap01basics/mypackage/` on disk.
+- Classes in sub-packages must declare the full package path at the top of the file.
+
+**Example:**
+```java
+// File: chap01basics/mypackage/Utils.java
+package chap01basics.mypackage;
+
+public class Utils {
+    public static void printMessage() {
+        System.out.println("Hello from sub-package!");
+    }
+}
+```
+
+To use a class from a sub-package:
+```java
+package chap01basics;
+
+import chap01basics.mypackage.Utils;
+
+public class TestSubPackage {
+    public static void main(String[] args) {
+        Utils.printMessage();
+    }
+}
+```
+
+**Output:**
+```output
+Hello from sub-package!
+```
+
+---
+
+## Exception Handling in Java
+
+- Concept to track the error during the execution and handle them gracefully.
+
+Exception handling in Java is a mechanism that allows you to manage runtime errors, ensuring the normal flow of the application. Exceptions are events that disrupt the normal execution of a program, such as dividing by zero or accessing an invalid array index.
+
+
+### Key Concepts
+
+- **Exception:** An object representing an error or unexpected event.
+- **Try-Catch Block:** Used to handle exceptions gracefully.
+    - **Try:** Code is written inside `try` block.
+    - **Catch:** Track the exception and give message.
+- **Finally Block:** Contains code that always executes, regardless of whether an exception occurred. Generally, holds clean up codes.
+- **Throw Statement:** Used to explicitly throw an exception.
+- **Throws Clause:** Declares exceptions that a method might throw.
+
+### Basic Syntax
+
+```java
+try {
+    // Code that may throw an exception
+} catch (ExceptionType e) {
+    // Code to handle the exception
+} finally {
+    // Code that always executes
+}
+```
+
+### Example
+
+```java
+package chap01basics;
+
+public class ExceptionDemo {
+    public static void main(String[] args) {
+        try {
+            int result = 10 / 0; // This will throw ArithmeticException
+        } catch (ArithmeticException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            System.out.println("This block always executes.");
+        }
+    }
+}
+```
+
+**Output:**
+```output
+Error: / by zero
+This block always executes.
+```
+
+### Example Using `throw` and `throws`
+
+The `throw` statement is used to explicitly throw an exception, while the `throws` keyword is used in a method signature to declare that the method might throw certain exceptions.
+
+```java
+package chap01basics;
+
+public class ThrowThrowsDemo {
+    // Method that declares it may throw an exception
+    public static void checkAge(int age) throws IllegalArgumentException {
+        if (age < 18) {
+            // Explicitly throw an exception
+            throw new IllegalArgumentException("Age must be 18 or above.");
+        }
+        System.out.println("Access granted.");
+    }
+
+    public static void main(String[] args) {
+        try {
+            checkAge(15);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Exception caught: " + e.getMessage());
+        }
+    }
+}
+```
+
+**Output:**
+```output
+Exception caught: Age must be 18 or above.
+```
+
+**Note:** You can specify multiple exceptions after the `throws` keyword in a method declaration, separated by commas. The `throw` statement is used to throw a single exception instance, and it must appear inside a method or constructor body (not after the class declaration).
+
+### Types of Exceptions
+
+- **Checked Exceptions:** Checked at compile-time (e.g., `IOException`, `SQLException`).
+- **Unchecked Exceptions:** Checked at runtime (e.g., `ArithmeticException`, `NullPointerException`).
+
+### Advantages
+
+- Improves program reliability and robustness.
+- Separates error-handling code from regular code.
+- Helps in debugging and maintaining code.
+
+**Note:** 
+- Always handle exceptions appropriately to avoid unexpected program termination. 
+- We can also handle multiple exceptions at a time in a single `catch` block as : `catch (ArithmeticException | IOException | ...)`
+
+### Error vs Exception
+
+| Aspect         | Error                                              | Exception                                         |
+|----------------|---------------------------------------------------|---------------------------------------------------|
+| Definition     | Serious problems that occur beyond application control, usually related to system resources. | Issues that occur during program execution and can be handled in code. |
+| Handling       | Cannot be handled or recovered by application code. | Can be caught and handled using try-catch blocks. |
+| Examples       | `OutOfMemoryError`, `StackOverflowError`           | `NullPointerException`, `IOException`             |
+| Package        | `java.lang.Error` and its subclasses               | `java.lang.Exception` and its subclasses          |
+| Occurrence     | Indicates problems in the runtime environment (JVM). | Indicates problems in the application code.       |
+| Recovery       | Not intended to be recovered from.                 | Can often be recovered from or handled gracefully.|
+
+**Summary:**  
+Errors are critical issues related to the JVM or system resources and can not be  be  handled in code, while exceptions are conditions that applications should anticipate and handle.
+
+### User Defined Exception
+
+In Java, you can create your own exception classes to handle specific error conditions in your application. These are called **user defined exceptions** or **custom exceptions**. Custom exceptions are created by extending the `Exception` class (for checked exceptions) or the `RuntimeException` class (for unchecked exceptions).
+
+#### Steps to Create a User Defined Exception
+1. Define a class that extends `Exception` or `RuntimeException`.
+2. Provide constructors as needed.
+3. Optionally, override the `toString()` and `getMessage()` methods to provide custom error messages.
+4. Throw the custom exception using the `throw` statement.
+5. Handle it using `try-catch` blocks.
+
+#### Example 1
+```java
+package chap01basics;
+
+// Custom exception class
+class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+public class CustomExceptionDemo {
+    // Method that throws the custom exception
+    static void validateAge(int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("Age is less than 18, not allowed.");
+        }
+        System.out.println("Age is valid.");
+    }
+
+    public static void main(String[] args) {
+        try {
+            validateAge(15);
+        } catch (InvalidAgeException e) {
+            System.out.println("Caught Exception: " + e.getMessage());
+        }
+    }
+}
+```
+
+**Output:**
+```output
+Caught Exception: Age is less than 18, not allowed.
+```
+
+#### Example 2
+```java
+package chap01basics;
+
+// Custom exception class by extending Exception
+class MyException extends Exception {
+    private String detail;
+
+    // Constructor to initialize detail message
+    public MyException(String message) {
+        this.detail = message;
+    }
+
+    // Override getMessage() to provide custom message
+    @Override
+    public String getMessage() {
+        return "Custom getMessage(): " + detail;
+    }
+
+    // Override toString() to provide custom string representation
+    @Override
+    public String toString() {
+        return "MyException: " + detail;
+    }
+}
+
+public class OverrideExceptionDemo {
+    public static void main(String[] args) {
+        try {
+            // Simulate a condition that throws the custom exception
+            throw new MyException("Something went wrong!");
+        } catch (MyException e) {
+            // Print custom messages from overridden methods
+            System.out.println(e); // Calls toString()
+            System.out.println(e.getMessage()); // Calls getMessage()
+        }
+    }
+}
+```
+
+**Output:**
+```output
+MyException: Something went wrong!
+Custom getMessage(): Something went wrong!
+```
+
+**Note:**  
+User defined exceptions help make your code more readable and meaningful by providing specific error messages for application-specific conditions.
+
+---
+
