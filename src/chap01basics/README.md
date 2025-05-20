@@ -812,3 +812,45 @@ User defined exceptions help make your code more readable and meaningful by prov
 
 ---
 
+## Access Modifiers in Java
+
+Access modifiers in Java determine the visibility and accessibility of classes, methods, and variables. They help enforce encapsulation and control how different parts of a program interact.
+
+### Types of Access Modifiers
+
+| Modifier    | Class | Package | Subclass | World (Other Packages) |
+|-------------|:-----:|:-------:|:--------:|:---------------------:|
+| `public`    |  ✔    |   ✔     |    ✔     |          ✔            |
+| `protected` |  ✔    |   ✔     |    ✔     |          ✖            |
+| `default`   |  ✔    |   ✔     |    ✖     |          ✖            |
+| `private`   |  ✔    |   ✖     |    ✖     |          ✖            |
+
+- **public**: Accessible from anywhere.
+- **protected**: Accessible within the same package and by subclasses in other packages.
+- **default** (no modifier): Accessible only within the same package.
+- **private**: Accessible only within the same class.
+
+### Example
+
+```java
+package chap01basics;
+
+public class AccessDemo {
+    public int publicVar = 1;
+    protected int protectedVar = 2;
+    int defaultVar = 3; // default access
+    private int privateVar = 4;
+
+    public void show() {
+        System.out.println(publicVar);      // Accessible
+        System.out.println(protectedVar);   // Accessible
+        System.out.println(defaultVar);     // Accessible
+        System.out.println(privateVar);     // Accessible
+    }
+}
+```
+
+**Summary:**  
+Use access modifiers to restrict or allow access to class members as needed, promoting encapsulation and secure code design.
+
+---
