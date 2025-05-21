@@ -630,3 +630,254 @@ Age: 20
 Encapsulation ensures that the internal representation of an object is hidden from the outside. Access to the data is only possible through well-defined methods, making the code more robust and easier to maintain.
 
 ---
+
+## Typecasting in Java
+
+Typecasting is the process of converting a variable from one data type to another. In Java, typecasting can be applied to both primitive types and reference types (objects).
+
+### Types of Typecasting
+
+1. **Primitive Typecasting**
+    - **Widening (Implicit):** Converting a smaller type to a larger type (e.g., `int` to `double`). This is done automatically by Java.
+    - **Narrowing (Explicit):** Converting a larger type to a smaller type (e.g., `double` to `int`). This must be done manually.
+
+**Example:**
+```java
+int a = 10;
+double b = a; // Widening (int to double)
+
+double x = 9.7;
+int y = (int) x; // Narrowing (double to int)
+System.out.println(b); // 10.0
+System.out.println(y); // 9
+```
+
+2. **Reference Typecasting**
+    - **Upcasting:** Converting a subclass object to a superclass reference (implicit).
+    - **Downcasting:** Converting a superclass reference back to a subclass reference (explicit).
+
+> See the sections below for more on upcasting and downcasting.
+
+**Summary:**  
+Typecasting allows you to convert between compatible types in Java. Widening conversions are safe and automatic, while narrowing conversions require explicit casting and may result in data loss.
+
+---
+
+## Upcasting vs Downcasting in Java
+
+- **Upcasting:** Super class to sub class.
+- **Downcasting:** Subclass to super class.
+
+### Upcasting
+
+Upcasting is the process of converting a subclass reference to a superclass reference. It is done implicitly and is safe because the subclass object "is a" superclass object.
+
+**Example:**
+```java
+Animal animal = new Dog(); // Upcasting
+```
+Here, `Dog` is a subclass of `Animal`. The reference variable `animal` can refer to a `Dog` object.
+
+**Benefits:**
+- Enables polymorphism (e.g., calling overridden methods).
+- Allows writing generic code that works with superclass types.
+
+### Downcasting
+
+Downcasting is the process of converting a superclass reference back to a subclass reference. It must be done explicitly and can throw a `ClassCastException` at runtime if the object is not actually an instance of the subclass.
+
+**Example:**
+```java
+Animal animal = new Dog(); // Upcasting
+Dog dog = (Dog) animal;    // Downcasting
+```
+
+**Caution:**  
+Always ensure the object is an instance of the subclass before downcasting, typically using the `instanceof` operator.
+
+**Example with instanceof:**
+```java
+if (animal instanceof Dog) {
+    Dog dog = (Dog) animal;
+    dog.bark();
+}
+```
+
+### Summary
+
+- **Upcasting:** Subclass → Superclass (implicit, safe)
+- **Downcasting:** Superclass → Subclass (explicit, may cause runtime error)
+- Upcasting is commonly used for polymorphism, while downcasting is used when subclass-specific behavior is needed.
+
+---
+
+## Abstract Class
+
+- Collection of abstract functions and normal/concrete function.
+
+An **abstract class** in Java is a class that cannot be instantiated directly and is meant to be subclassed. It can have abstract methods (methods without a body) as well as concrete methods (with implementation). Abstract classes are used to provide a common base and to enforce certain methods to be implemented by subclasses.
+
+### Key Points:
+- Declared using the `abstract` keyword.
+- Can have both abstract and non-abstract methods (methods that has no body).
+- Cannot be instantiated directly.
+- Subclasses must implement all abstract methods, unless they are also abstract.
+
+**Example:**
+```java
+package chap02oops;
+
+abstract class Animal {
+    abstract void sound(); // Abstract method
+
+    void eat() { // Concrete method
+        System.out.println("Animal is eating");
+    }
+}
+
+class Dog extends Animal {
+    void sound() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class AbstractClassExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.sound();
+        dog.eat();
+    }
+}
+```
+
+**Output:**
+```output
+Dog barks
+Animal is eating
+```
+
+**Summary:**  
+Abstract classes provide a way to define common behavior and enforce a contract for subclasses, while still allowing some shared implementation.
+
+---
+
+## Final Class
+
+- Class that can't be inherited.
+
+A **final class** in Java is a class that cannot be subclassed (i.e., no other class can extend it). Declaring a class as `final` is useful when you want to prevent inheritance for security, design, or performance reasons.
+
+### Key Points:
+- Declared using the `final` keyword.
+- Cannot be extended by any other class.
+- All methods in a final class are implicitly final.
+- Commonly used for utility or helper classes (e.g., `java.lang.String`).
+
+**Example:**
+```java
+package chap02oops;
+
+final class Vehicle {
+    void display() {
+        System.out.println("This is a vehicle");
+    }
+}
+
+// The following will cause a compile-time error
+// class Car extends Vehicle { }
+
+public class FinalClassExample {
+    public static void main(String[] args) {
+        Vehicle v = new Vehicle();
+        v.display();
+    }
+}
+```
+
+**Output:**
+```output
+This is a vehicle
+```
+
+**Summary:**  
+Final classes are used to prevent inheritance, ensuring that the class's implementation remains unchanged and secure.
+
+---
+
+## Final Methods in Java
+
+A **final method** in Java is a method that cannot be overridden by subclasses. Declaring a method as `final` ensures that its implementation remains unchanged in any subclass, which can be important for security, consistency, or design reasons.
+
+### Key Points:
+- Declared using the `final` keyword.
+- Cannot be overridden in any subclass.
+- Can be inherited and used as-is by subclasses.
+- Often used to prevent modification of critical methods.
+
+**Example:**
+```java
+package chap02oops;
+
+class Parent {
+    final void show() {
+        System.out.println("This is a final method.");
+    }
+}
+
+class Child extends Parent {
+    // The following would cause a compile-time error:
+    // void show() { System.out.println("Cannot override."); }
+}
+
+public class FinalMethodExample {
+    public static void main(String[] args) {
+        Child c = new Child();
+        c.show();
+    }
+}
+```
+
+**Output:**
+```output
+This is a final method.
+```
+
+**Summary:**  
+Final methods are used to prevent subclasses from altering the behavior of certain methods, ensuring reliability and consistency in class hierarchies.
+
+---
+
+## Final Variables in Java
+
+A **final variable** in Java is a variable whose value cannot be changed once it has been assigned. Declaring a variable as `final` makes it a constant, ensuring its value remains unchanged throughout the program.
+
+### Key Points:
+- Declared using the `final` keyword.
+- Must be initialized only once, either at the time of declaration or within a constructor.
+- Commonly used for constants (e.g., `final int MAX_SIZE = 100;`).
+- Final variables improve code safety and readability.
+
+**Example:**
+```java
+package chap02oops;
+
+public class FinalVariableExample {
+    public static void main(String[] args) {
+        final int MAX_AGE = 100;
+        System.out.println("Maximum age: " + MAX_AGE);
+
+        // The following line would cause a compile-time error:
+        // MAX_AGE = 120;
+    }
+}
+```
+
+**Output:**
+```output
+Maximum age: 100
+```
+
+**Summary:**  
+Final variables are used to define constants in Java, preventing accidental modification and making code more robust and maintainable.
+
+---

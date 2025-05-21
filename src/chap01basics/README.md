@@ -854,3 +854,81 @@ public class AccessDemo {
 Use access modifiers to restrict or allow access to class members as needed, promoting encapsulation and secure code design.
 
 ---
+
+## Collection Framework in Java
+
+- Set of predefined class for Dynamic Memory Management.
+
+The Java Collection Framework is a unified architecture for storing, retrieving, and manipulating groups of objects. It provides a set of interfaces and classes that implement commonly reusable collection data structures such as lists, sets, queues, and maps.
+
+### Key Features
+
+- **Consistent API:** All collections implement standard interfaces, making them easy to use and interchange.
+- **Reduces Programming Effort:** Ready-to-use data structures and algorithms.
+- **Increases Performance:** Efficient implementations for various data structures.
+- **Type Safety:** Supports generics for compile-time type checking.
+
+### Core Interfaces
+
+| Interface   | Description                                 | Example Implementations      |
+|-------------|---------------------------------------------|-----------------------------|
+| `Collection`| Root of the collection hierarchy            | -                           |
+| `List`      | Ordered collection with duplicates allowed  | `ArrayList`, `LinkedList`   |
+| `Set`       | Unordered collection with no duplicates     | `HashSet`, `TreeSet`        |
+| `Queue`     | Collection for holding elements prior to processing | `PriorityQueue`, `ArrayDeque` |
+| `Map`       | Key-value pairs (not a true Collection)     | `HashMap`, `TreeMap`        |
+
+### Collection Hierarchy
+
+![Collection Hierarchy](https://upload.wikimedia.org/wikipedia/commons/a/ab/Java.util.Collection_hierarchy.svg)
+
+### Example Usage
+
+```java
+package chap01basics;
+
+import java.util.*;
+
+public class CollectionDemo {
+    public static void main(String[] args) {
+        // List example
+        List<String> list = new ArrayList<>();
+        list.add("Apple");
+        list.add("Banana");
+        list.add("Apple"); // Duplicates allowed
+
+        // Set example
+        Set<String> set = new HashSet<>();
+        set.add("Apple");
+        set.add("Banana");
+        set.add("Apple"); // Duplicates ignored
+
+        // Map example
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "One");
+        map.put(2, "Two");
+
+        System.out.println("List: " + list);
+        System.out.println("Set: " + set);
+        System.out.println("Map: " + map);
+    }
+}
+```
+
+**Output:**
+```output
+List: [Apple, Banana, Apple]
+Set: [Apple, Banana]
+Map: {1=One, 2=Two}
+```
+
+### Advantages
+
+- Simplifies code by providing ready-made data structures.
+- Increases code reusability and maintainability.
+- Supports algorithms like sorting and searching.
+
+**Note:**  
+Always choose the appropriate collection type based on requirements such as ordering, duplication, and performance.
+
+---
