@@ -43,7 +43,7 @@ public class ChangeBackground extends JFrame {
 ```
 
 **Main.java**
-```
+```java
 package lab08buttons;
 
 public class Main {
