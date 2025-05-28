@@ -181,6 +181,276 @@ public class FrameDemoActionListener extends JFrame implements ActionListener {
 
 ---
 
+## JRadioButton in Swing
+
+A **JRadioButton** is a Swing component that represents a radio button, allowing the user to select one option from a group of choices. Radio buttons are typically used in groups, where only one button in the group can be selected at a time. To group radio buttons, use the `ButtonGroup` class.
+
+### Key Points
+
+- Use `JRadioButton` to create individual radio buttons.
+- Use `ButtonGroup` to ensure only one button in the group is selected.
+- You can add action listeners to handle selection events.
+
+### Example: Using JRadioButton
+
+```java
+package chap03ui;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class RadioButtonDemo extends JFrame implements ActionListener {
+    JRadioButton male, female, other;
+    JButton submit;
+
+    RadioButtonDemo() {
+        setTitle("JRadioButton Example");
+        setSize(500, 500);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+
+        male = new JRadioButton("Male");
+        female = new JRadioButton("Female");
+        other = new JRadioButton("Other");
+
+        // Group the radio buttons
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(male);
+        bg.add(female);
+        bg.add(other);
+
+        submit = new JButton("Submit");
+        submit.addActionListener(this);
+
+        add(male);
+        add(female);
+        add(other);
+        add(submit);
+
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String msg = "Selected: ";
+        if (male.isSelected()) msg += "Male";
+        else if (female.isSelected()) msg += "Female";
+        else if (other.isSelected()) msg += "Other";
+        else msg += "None";
+        JOptionPane.showMessageDialog(this, msg);
+    }
+
+    public static void main(String[] args) {
+        new RadioButtonDemo();
+    }
+}
+```
+
+**Output:**
+
+![RadioButtonDemo](../../assets/chap03ui/RadioButtonDemo.png)
+
+**Note:**  
+Radio buttons are ideal for mutually exclusive choices in forms and dialogs.
+
+---
+
+## JCheckBox in Swing
+
+A **JCheckBox** is a Swing component that represents a checkbox, allowing users to make a binary choice (checked or unchecked). Unlike radio buttons, multiple checkboxes in a group can be selected at the same time, making them ideal for options where more than one selection is allowed.
+
+### Key Points
+
+- Use `JCheckBox` to create checkboxes for multiple selections.
+- You can add action listeners to handle state changes.
+- The `isSelected()` method checks whether a checkbox is selected.
+
+### Example: Using JCheckBox
+
+```java
+package chap03ui;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class CheckBoxDemo extends JFrame implements ActionListener {
+    JCheckBox java, python, cpp;
+    JButton submit;
+
+    CheckBoxDemo() {
+        setTitle("JCheckBox Example");
+        setSize(400, 400);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+
+        java = new JCheckBox("Java");
+        python = new JCheckBox("Python");
+        cpp = new JCheckBox("C++");
+
+        submit = new JButton("Submit");
+        submit.addActionListener(this);
+
+        add(java);
+        add(python);
+        add(cpp);
+        add(submit);
+
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String msg = "Selected: ";
+        if (java.isSelected()) msg += "Java ";
+        if (python.isSelected()) msg += "Python ";
+        if (cpp.isSelected()) msg += "C++ ";
+        if (!java.isSelected() && !python.isSelected() && !cpp.isSelected()) msg += "None";
+        JOptionPane.showMessageDialog(this, msg);
+    }
+
+    public static void main(String[] args) {
+        new CheckBoxDemo();
+    }
+}
+```
+
+**Output:**
+
+![CheckBoxDemo](../../assets/chap03ui/CheckBoxDemo.png)
+
+**Note:**  
+Check boxes are useful for settings, preferences, and forms where users can select multiple options independently.
+
+---
+
+## JComboBox in Swing
+
+A **JComboBox** is a Swing component that provides a drop-down list of items for users to choose from. It combines the features of a text field and a list, allowing users to either select an item from the list or enter their own value (if editable). JComboBox is useful for presenting a set of options in a compact form.
+
+### Key Points
+
+- Use `JComboBox` to create drop-down lists.
+- Items can be added using the constructor or the `addItem()` method.
+- You can retrieve the selected item with `getSelectedItem()`.
+- Action listeners can be added to handle selection changes.
+
+### Example: Using JComboBox
+
+```java
+package chap03ui;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class ComboBoxDemo extends JFrame implements ActionListener {
+    JComboBox<String> languageBox;
+    JButton showButton;
+
+    ComboBoxDemo() {
+        setTitle("JComboBox Example");
+        setSize(400, 400);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+
+        String[] languages = {"Java", "Python", "C++", "JavaScript"};
+        languageBox = new JComboBox<>(languages);
+
+        showButton = new JButton("Show Selected");
+        showButton.addActionListener(this);
+
+        add(languageBox);
+        add(showButton);
+
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String selected = (String) languageBox.getSelectedItem();
+        JOptionPane.showMessageDialog(this, "Selected: " + selected);
+    }
+
+    public static void main(String[] args) {
+        new ComboBoxDemo();
+    }
+}
+```
+
+**Output:**
+
+![ComboBoxDemo](../../assets/chap03ui/ComboBoxDemo.png)
+
+**Note:**  
+JComboBox is ideal for situations where you want to save space and present a list of options for the user to select from.
+
+---
+
+## JTextArea in Swing
+
+A **JTextArea** is a multi-line area that displays plain text. It allows users to enter or edit multiple lines of text, making it suitable for tasks like comments, logs, or document editing. Unlike `JTextField`, which is single-line, `JTextArea` supports line wrapping and scrolling.
+
+### Key Points
+
+- Use `JTextArea` for multi-line text input or display.
+- You can set the number of rows and columns via the constructor.
+- To add scrollbars, wrap the `JTextArea` in a `JScrollPane`.
+- Supports methods like `setText()`, `getText()`, and `append()`.
+
+### Example: Using JTextArea
+
+```java
+package chap03ui;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class TextAreaDemo extends JFrame implements ActionListener {
+    JTextArea textArea;
+    JButton showButton;
+
+    TextAreaDemo() {
+        setTitle("JTextArea Example");
+        setSize(400, 300);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+
+        textArea = new JTextArea(8, 30);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        showButton = new JButton("Show Text");
+        showButton.addActionListener(this);
+
+        add(scrollPane);
+        add(showButton);
+
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String content = textArea.getText();
+        JOptionPane.showMessageDialog(this, "You entered:\n" + content);
+    }
+
+    public static void main(String[] args) {
+        new TextAreaDemo();
+    }
+}
+```
+
+**Output:**
+
+![TextAreaDemo](../../assets/chap03ui/TextAreaDemo.png)
+
+**Note:**  
+JTextArea is ideal for collecting or displaying large amounts of text. For better usability, always use it with a scroll pane.
+
+---
+
 ## Creating Menus in Swing
 
 Swing provides the `JMenuBar`, `JMenu`, and `JMenuItem` classes to create menus for desktop applications. Menus are typically placed at the top of a window and allow users to perform actions such as opening files, saving, or exiting the application.
