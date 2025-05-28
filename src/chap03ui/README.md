@@ -60,6 +60,7 @@ public class FrameDemo extends JFrame {
 ```
 
 **Output:**
+
 ![FrameDemo](../../assets/chap03ui/FrameDemo.png)
 
 ### JavaFX
@@ -168,6 +169,7 @@ public class FrameDemoActionListener extends JFrame implements ActionListener {
 ```
 
 **Output:**
+
 ![FrameDemoActionListener](../../assets/chap03ui/FrameDemoActionListener.png)
 
 ### Key Points

@@ -3,6 +3,7 @@
 ## Objective
 
 1. WAP to create the following frame.
+
 ![Frame](../../assets/lab06frame/question.png)
 
 ---
