@@ -774,3 +774,98 @@ Choosing the right layout manager is essential for creating user-friendly and re
 
 ---
 
+## JavaFX
+
+JavaFX is a modern framework for building rich client applications in Java. It provides a powerful set of APIs for creating visually appealing user interfaces with features such as 2D and 3D graphics, animation, audio, video, and web content integration. JavaFX uses a scene graph architecture, where the UI is composed of nodes arranged in a hierarchical structure. Layouts, controls, and effects can be combined to create complex interfaces.
+
+![JavaFX Stage](https://student.cs.uwaterloo.ca/~cs349/1235/reference/2-javafx/assets/javafx_stage2.png)
+![Hierarchy Diagram](https://www.vojtechruzicka.com/static/eb6b7c6158cd23baba39588405c4dd30/b1584/hierarchy-diagram.png)
+
+Key features of JavaFX include:
+- **Scene-based graphics:** JavaFX uses a scene graph architecture, where the UI is structured as a hierarchy of nodes. This allows for flexible and efficient rendering of complex user interfaces and graphics.
+- **FXML:** An XML-based language for defining UI layouts separately from application logic.
+- **Animation:** JavaFX provides robust animation APIs for creating smooth transitions, timelines, fades, rotations, scaling, and other visual effects to enhance user experience.
+- **CSS Styling:** Allows customization of UI appearance using CSS.
+- **Property Bindings:** Enables automatic updates of UI elements when underlying data changes.
+- **Rich Controls:** Provides a wide range of built-in controls like buttons, tables, charts, and more.
+- **Cross-Platform:** JavaFX applications run on Windows, macOS, and Linux.
+
+Since JDK 11, JavaFX is distributed as a separate module, allowing developers to include only the necessary components in their applications. JavaFX is recommended for new Java desktop projects due to its modern architecture and capabilities.
+
+### Difference Between JavaFX and Swing
+
+| Feature                | Swing                                         | JavaFX                                         |
+|------------------------|-----------------------------------------------|------------------------------------------------|
+| **Introduction**       | Introduced in 1997 as part of JDK 1.2         | Introduced in 2008 (JavaFX 1.0), modernized in JDK 8+ |
+| **Architecture**       | Lightweight components, based on AWT          | Scene graph architecture (hierarchical nodes)   |
+| **UI Design**          | Code-based UI design                          | Supports FXML (XML-based UI design)             |
+| **Styling**            | Limited support via `UIManager` and Look & Feel | CSS-based styling for flexible customization    |
+| **Animation**          | Basic, manual implementation                  | Built-in animation and effects APIs             |
+| **Multimedia**         | Limited (basic images, audio)                 | Advanced multimedia (audio, video, web content) |
+| **Property Binding**   | Not supported natively                        | Built-in property binding and observables       |
+| **3D Graphics**        | Not supported                                 | Supports 2D and 3D graphics                    |
+| **Threading Model**    | Single-threaded (Event Dispatch Thread)       | JavaFX Application Thread, supports concurrency |
+| **Deployment**         | Bundled with JDK (up to JDK 8)                | Separate modules since JDK 11                   |
+| **Modern Features**    | Lacks modern UI features                      | Modern UI controls, responsive design           |
+| **Recommended For**    | Legacy desktop applications                   | New desktop applications                        |
+
+**Summary:**  
+Swing is mature and widely used for legacy applications, but JavaFX offers a more modern, flexible, and feature-rich approach for building new Java desktop applications.
+
+### Example: Simple JavaFX Application
+
+```java
+package chap03ui;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class JavaFXDemo extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        TextField nameField = new TextField();
+        nameField.setPromptText("Enter your name");
+
+        Button btn = new Button("Say Hello");
+        btn.setOnAction(e -> {
+            String name = nameField.getText().trim();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            if (!name.isEmpty()) {
+                alert.setContentText("Hello, " + name + "!");
+            } else {
+                alert.setContentText("Please enter your name.");
+            }
+            alert.showAndWait();
+        });
+
+        VBox root = new VBox(10, nameField, btn);
+        root.setStyle("-fx-padding: 20; -fx-alignment: center;");
+
+        Scene scene = new Scene(root, 300, 200);
+
+        primaryStage.setTitle("JavaFX Hello Name Demo");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+```
+
+**Output:**
+
+When you run this program, a window appears with a text field and a button labeled "Say Hello". Enter your name in the text field and click the button. An information dialog will pop up displaying "Hello, [your name]!" If the text field is empty, the dialog will prompt you to enter your name.
+
+![Output](../../assets/chap03ui/JavaFXDemo.png)
+
+**Note:**  
+To run JavaFX applications with JDK 11 or later, ensure the JavaFX libraries are included in your project/module path.
+
+---
