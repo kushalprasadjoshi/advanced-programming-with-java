@@ -1,4 +1,4 @@
-package lab15ddbc;
+package lab15jdbc;
 
 public class Main {
     public static void main(String[] args) {

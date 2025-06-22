@@ -21,8 +21,9 @@
 ## Implementation
 
 **Main.java**
+
 ```java
-package lab15ddbc;
+package lab15jdbc;
 
 public class Main {
     public static void main(String[] args) {
@@ -33,8 +34,9 @@ public class Main {
 ```
 
 **LoginFrame.java**
+
 ```java
-package lab15ddbc;
+package lab15jdbc;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -126,8 +128,9 @@ public class LoginFrame extends Application {
 ```
 
 **DatabaseCreator.java**
+
 ```java
-package lab15ddbc;
+package lab15jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -160,8 +163,9 @@ public class DatabaseCreator {
 ```
 
 **DatabaseHelper.java**
+
 ```java
-package lab15ddbc;
+package lab15jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -211,8 +215,9 @@ public class DatabaseHelper {
 ---
 
 **UserDAO.java**
+
 ```java
-package lab15ddbc;
+package lab15jdbc;
 
 import java.sql.*;
 
@@ -265,6 +270,6 @@ public class UserDAO {
 
 ## Output
 
-![New User](../../assets/lab15ddbc/new-user.png) ![Old User](../../assets/lab15ddbc/old-user.png)
+![New User](../../assets/lab15jdbc/new-user.png) ![Old User](../../assets/lab15jdbc/old-user.png)
 
 ---

@@ -1,4 +1,4 @@
-package lab15ddbc;
+package lab15jdbc;
 
 import java.sql.*;
 
