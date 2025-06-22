@@ -869,3 +869,311 @@ When you run this program, a window appears with a text field and a button label
 To run JavaFX applications with JDK 11 or later, ensure the JavaFX libraries are included in your project/module path.
 
 ---
+
+## JavaFX Controls: RadioButton, CheckBox, TextArea, ComboBox
+
+JavaFX provides a rich set of UI controls similar to Swing, but with modern features and styling. Here are notes and examples for some commonly used controls:
+
+### RadioButton
+
+A **RadioButton** in JavaFX allows users to select one option from a group. To ensure only one button is selected at a time, group them using a `ToggleGroup`.
+
+**Example:**
+```java
+package chap03ui;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class RadioButtonDemoFX extends Application {
+    @Override
+    public void start(Stage stage) {
+        RadioButton rb1 = new RadioButton("Option 1");
+        RadioButton rb2 = new RadioButton("Option 2");
+        RadioButton rb3 = new RadioButton("Option 3");
+
+        ToggleGroup group = new ToggleGroup();
+        rb1.setToggleGroup(group);
+        rb2.setToggleGroup(group);
+        rb3.setToggleGroup(group);
+
+        Button btn = new Button("Show Selected");
+        btn.setOnAction(e -> {
+            RadioButton selected = (RadioButton) group.getSelectedToggle();
+            String msg = (selected != null) ? selected.getText() : "None";
+            new Alert(Alert.AlertType.INFORMATION, "Selected: " + msg).showAndWait();
+        });
+
+        VBox root = new VBox(10, rb1, rb2, rb3, btn);
+        root.setStyle("-fx-padding: 20;");
+        stage.setScene(new Scene(root));
+        stage.setTitle("JavaFX RadioButton Example");
+        stage.show();
+    }
+    public static void main(String[] args) { launch(args); }
+}
+```
+
+**Output:**
+
+![Output](../../assets/chap03ui/RadioButtonDemoFX.png)
+
+### CheckBox
+
+A **CheckBox** allows users to select or deselect multiple independent options.
+
+**Example:**
+```java
+package chap03ui;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class CheckBoxDemoFX extends Application {
+    @Override
+    public void start(Stage stage) {
+        CheckBox cb1 = new CheckBox("Java");
+        CheckBox cb2 = new CheckBox("Python");
+        CheckBox cb3 = new CheckBox("C++");
+
+        Button btn = new Button("Show Selected");
+        btn.setOnAction(e -> {
+            StringBuilder sb = new StringBuilder("Selected: ");
+            if (cb1.isSelected()) sb.append("Java ");
+            if (cb2.isSelected()) sb.append("Python ");
+            if (cb3.isSelected()) sb.append("C++ ");
+            if (!cb1.isSelected() && !cb2.isSelected() && !cb3.isSelected()) sb.append("None");
+            new Alert(Alert.AlertType.INFORMATION, sb.toString()).showAndWait();
+        });
+
+        VBox root = new VBox(10, cb1, cb2, cb3, btn);
+        root.setStyle("-fx-padding: 20;");
+        stage.setScene(new Scene(root));
+        stage.setTitle("JavaFX CheckBox Example");
+        stage.show();
+    }
+    public static void main(String[] args) { launch(args); }
+}
+```
+
+**Output:**
+
+![Output](../../assets/chap03ui/CheckBoxDemoFX.png)
+
+### TextArea
+
+A **TextArea** is a multi-line text input control, suitable for entering or displaying large amounts of text.
+
+**Example:**
+```java
+package chap03ui;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class TextAreaDemoFX extends Application {
+    @Override
+    public void start(Stage stage) {
+        TextArea textArea = new TextArea();
+        textArea.setPromptText("Enter your comments here...");
+        textArea.setPrefRowCount(6);
+
+        Button btn = new Button("Show Text");
+        btn.setOnAction(e -> {
+            String content = textArea.getText();
+            new Alert(Alert.AlertType.INFORMATION, "You entered:\n" + content).showAndWait();
+        });
+
+        VBox root = new VBox(10, textArea, btn);
+        root.setStyle("-fx-padding: 20;");
+        stage.setScene(new Scene(root, 350, 200));
+        stage.setTitle("JavaFX TextArea Example");
+        stage.show();
+    }
+    public static void main(String[] args) { launch(args); }
+}
+```
+
+**Output:**
+
+![Output](../../assets/chap03ui/TextAreaDemoFX.png)
+
+### ComboBox
+
+A **ComboBox** provides a drop-down list of options for users to select from. It can also be made editable to allow custom input.
+
+**Example:**
+```java
+package chap03ui;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class ComboBoxDemoFX extends Application {
+    @Override
+    public void start(Stage stage) {
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll("Java", "Python", "C++", "JavaScript");
+        comboBox.setPromptText("Select Language");
+
+        Button btn = new Button("Show Selected");
+        btn.setOnAction(e -> {
+            String selected = comboBox.getValue();
+            String msg = (selected != null) ? selected : "None";
+            new Alert(Alert.AlertType.INFORMATION, "Selected: " + msg).showAndWait();
+        });
+
+        VBox root = new VBox(10, comboBox, btn);
+        root.setStyle("-fx-padding: 20;");
+        stage.setScene(new Scene(root, 300, 120));
+        stage.setTitle("JavaFX ComboBox Example");
+        stage.show();
+    }
+    public static void main(String[] args) { launch(args); }
+}
+```
+
+**Output:**
+
+![Output](../../assets/chap03ui/ComboBoxDemoFX.png)
+
+
+### Summary Table
+
+| Control      | Purpose                                 | Grouping Needed | Multiple Selection | Example Class      |
+|--------------|-----------------------------------------|-----------------|-------------------|--------------------|
+| RadioButton  | Single choice from a group              | Yes (ToggleGroup)| No                | `RadioButton`      |
+| CheckBox     | Multiple independent selections         | No              | Yes               | `CheckBox`         |
+| TextArea     | Multi-line text input/display           | No              | N/A               | `TextArea`         |
+| ComboBox     | Drop-down list for single selection     | No              | No                | `ComboBox<T>`      |
+
+---
+## JavaFX Layouts
+
+JavaFX provides several layout panes to arrange UI controls in a scene. Each layout pane manages the size and position of its child nodes in a specific way. Here are the most commonly used JavaFX layouts, their syntax, and an example:
+
+### 1. HBox
+
+Arranges nodes in a single horizontal row.
+
+**Syntax:**
+```java
+HBox hbox = new HBox(spacing, node1, node2, ...);
+```
+
+### 2. VBox
+
+Arranges nodes in a single vertical column.
+
+**Syntax:**
+```java
+VBox vbox = new VBox(spacing, node1, node2, ...);
+```
+
+### 3. BorderPane
+
+Divides the scene into five regions: top, bottom, left, right, and center.
+
+**Syntax:**
+```java
+BorderPane borderPane = new BorderPane();
+borderPane.setTop(nodeTop);
+borderPane.setBottom(nodeBottom);
+borderPane.setLeft(nodeLeft);
+borderPane.setRight(nodeRight);
+borderPane.setCenter(nodeCenter);
+```
+
+### 4. GridPane
+
+Arranges nodes in a flexible grid of rows and columns.
+
+**Syntax:**
+```java
+GridPane grid = new GridPane();
+grid.add(node, columnIndex, rowIndex);
+```
+
+### 5. FlowPane
+
+Lays out nodes in a flow that wraps at the container’s edge (horizontal or vertical).
+
+**Syntax:**
+```java
+FlowPane flowPane = new FlowPane(orientation, hgap, vgap, node1, node2, ...);
+```
+
+---
+
+### Example: Using Multiple Layouts
+
+```java
+package chap03ui;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+
+public class LayoutDemoFX extends Application {
+    @Override
+    public void start(Stage stage) {
+        // HBox
+        HBox hbox = new HBox(10, new Button("HBox 1"), new Button("HBox 2"));
+
+        // VBox
+        VBox vbox = new VBox(10, new Label("VBox 1"), new Label("VBox 2"));
+
+        // GridPane
+        GridPane grid = new GridPane();
+        grid.add(new Label("Row 0, Col 0"), 0, 0);
+        grid.add(new Label("Row 0, Col 1"), 1, 0);
+        grid.add(new Label("Row 1, Col 0"), 0, 1);
+        grid.add(new Label("Row 1, Col 1"), 1, 1);
+
+        // BorderPane
+        BorderPane borderPane = new BorderPane();
+        borderPane.setTop(hbox);
+        borderPane.setLeft(vbox);
+        borderPane.setCenter(grid);
+
+        Scene scene = new Scene(borderPane, 400, 250);
+        stage.setTitle("JavaFX Layouts Demo");
+        stage.setScene(scene);
+        stage.show();
+    }
+    public static void main(String[] args) { launch(args); }
+}
+```
+
+**Output:**
+
+When you run this program, you will see a window with an HBox at the top, a VBox on the left, and a GridPane in the center, demonstrating the use of multiple JavaFX layouts.
+
+![Output](../../assets/chap03ui/LayoutDemoFX.png)
+
+
+### Summary Table
+
+| Layout Pane | Arrangement         | Typical Use Case                  |
+|-------------|---------------------|-----------------------------------|
+| HBox        | Horizontal row      | Toolbars, button bars             |
+| VBox        | Vertical column     | Forms, stacked controls           |
+| BorderPane  | 5 regions           | Main application window structure |
+| GridPane    | Grid (rows/columns) | Forms, spreadsheets               |
+| FlowPane    | Wrapping flow       | Tag clouds, icon lists            |
+
+---
