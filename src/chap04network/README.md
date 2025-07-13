@@ -1,3 +1,92 @@
+# Chap 04 - Distributed Network Programming
+
+Distributed network programming involves designing and implementing software systems where components located on different networked computers communicate and coordinate their actions by passing messages. This approach enables resource sharing, scalability, fault tolerance, and parallel processing. In distributed systems, communication can occur through various protocols and technologies, such as sockets, Remote Method Invocation (RMI), and web services. Key challenges include handling network latency, partial failures, data consistency, and security. Distributed network programming is fundamental for building modern applications like cloud services, microservices, and collaborative tools.
+
+---
+
+## TCP (Transmission Control Protocol)
+
+TCP is a core protocol of the Internet Protocol Suite that provides reliable, connection-oriented communication between networked devices. It ensures that data sent from one computer to another arrives intact and in the correct order. TCP achieves this by establishing a connection using a three-way handshake, sequencing data packets, retransmitting lost packets, and managing flow control to prevent congestion. Common applications that use TCP include web browsing (HTTP/HTTPS), email (SMTP), and file transfers (FTP). TCP is widely used in distributed systems where reliable data delivery is essential.
+
+### Steps for TCP Programming
+
+1. **Server Side:**
+    - Create a `ServerSocket` object to listen for incoming connections on a specific port.
+    - Call `accept()` on the `ServerSocket` to wait for a client connection. This returns a `Socket` object for communication.
+    - Use input and output streams from the `Socket` to read from and write to the client.
+    - Close the streams and sockets when done.
+
+2. **Client Side:**
+    - Create a `Socket` object to connect to the server using the server's IP address and port number.
+    - Use input and output streams from the `Socket` to communicate with the server.
+    - Close the streams and socket after communication is complete.
+
+**Example:**
+
+**TCPServer.java**
+```java
+import java.io.*;
+import java.net.*;
+
+public class TCPServer {
+     public static void main(String[] args) throws IOException {
+          ServerSocket serverSocket = new ServerSocket(5000);
+          System.out.println("Server started, waiting for client...");
+          Socket socket = serverSocket.accept();
+          BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+          PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+          String message = in.readLine();
+          System.out.println("Received from client: " + message);
+          out.println("Hello from server!");
+
+          in.close();
+          out.close();
+          socket.close();
+          serverSocket.close();
+     }
+}
+```
+
+**TCPClient.java**
+```java
+import java.io.*;
+import java.net.*;
+
+public class TCPClient {
+     public static void main(String[] args) throws IOException {
+          Socket socket = new Socket("localhost", 5000);
+          BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+          PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+          out.println("Hello from client!");
+          String response = in.readLine();
+          System.out.println("Received from server: " + response);
+
+          in.close();
+          out.close();
+          socket.close();
+     }
+}
+```
+
+#### Output
+
+First run the **TCPServer.java**:
+
+```output
+Server started, waiting for client...
+Received from client: Hello from client!
+```
+
+Then run the **TCPClient.java**:
+
+```output
+Received from server: Hello from server!
+```
+
+---
+
 ## RMI (Remote Method Invocation)
 
 - RMI enables a method in one Java program to be called from another program running on a different computer over a network.
