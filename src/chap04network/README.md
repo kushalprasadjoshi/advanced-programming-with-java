@@ -87,6 +87,93 @@ Received from server: Hello from server!
 
 ---
 
+## UDP (User Datagram Protocol)
+
+UDP is a core protocol of the Internet Protocol Suite that provides connectionless, unreliable communication between networked devices. Unlike TCP, UDP does not guarantee message delivery, order, or error checking, making it faster and more suitable for applications where speed is more critical than reliability. UDP is commonly used in real-time applications such as video streaming, online gaming, and voice over IP (VoIP), where occasional data loss is acceptable.
+
+### Steps for UDP Programming
+
+1. **Server Side:**
+    - Create a `DatagramSocket` object bound to a specific port to listen for incoming datagrams.
+    - Use a `DatagramPacket` to receive data from clients.
+    - Process the received data and optionally send a response using another `DatagramPacket`.
+    - Close the socket when done.
+
+2. **Client Side:**
+    - Create a `DatagramSocket` object (optionally bound to any available port).
+    - Use a `DatagramPacket` to send data to the server's IP address and port.
+    - Optionally, receive a response from the server using another `DatagramPacket`.
+    - Close the socket after communication is complete.
+
+**Example:**
+
+**UDPServer.java**
+```java
+import java.net.*;
+
+public class UDPServer {
+    public static void main(String[] args) throws Exception {
+        DatagramSocket socket = new DatagramSocket(6000);
+        byte[] buffer = new byte[1024];
+        DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+
+        System.out.println("UDP Server started, waiting for client...");
+        socket.receive(packet);
+        String message = new String(packet.getData(), 0, packet.getLength());
+        System.out.println("Received from client: " + message);
+
+        String response = "Hello from UDP server!";
+        byte[] responseData = response.getBytes();
+        DatagramPacket responsePacket = new DatagramPacket(
+            responseData, responseData.length, packet.getAddress(), packet.getPort());
+        socket.send(responsePacket);
+
+        socket.close();
+    }
+}
+```
+
+**UDPClient.java**
+```java
+import java.net.*;
+
+public class UDPClient {
+    public static void main(String[] args) throws Exception {
+        DatagramSocket socket = new DatagramSocket();
+        String message = "Hello from UDP client!";
+        byte[] data = message.getBytes();
+        InetAddress serverAddress = InetAddress.getByName("localhost");
+        DatagramPacket packet = new DatagramPacket(data, data.length, serverAddress, 6000);
+        socket.send(packet);
+
+        byte[] buffer = new byte[1024];
+        DatagramPacket responsePacket = new DatagramPacket(buffer, buffer.length);
+        socket.receive(responsePacket);
+        String response = new String(responsePacket.getData(), 0, responsePacket.getLength());
+        System.out.println("Received from server: " + response);
+
+        socket.close();
+    }
+}
+```
+
+#### Output
+
+First run the **UDPServer.java**:
+
+```output
+UDP Server started, waiting for client...
+Received from client: Hello from UDP client!
+```
+
+Then run the **UDPClient.java**:
+
+```output
+Received from server: Hello from UDP server!
+```
+
+---
+
 ## RMI (Remote Method Invocation)
 
 - RMI enables a method in one Java program to be called from another program running on a different computer over a network.
